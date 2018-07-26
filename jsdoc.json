@@ -1,0 +1,22 @@
+{
+  "tags": {
+    "allowUnknownTags": true
+  },
+  "plugins": [
+    "plugins/markdown"
+  ],
+  "opts":{
+    "includePattern": ".+\\.(js(doc|x)?|mjs)$"
+  },
+  "source":{
+    "include": ["README.md"]
+  },
+  "markdown": {
+    "parser": "gfm",
+    "hardwrap": true
+  },
+  "templates": {
+    "cleverLinks": true,
+    "monospaceLinks": true
+  }
+}
