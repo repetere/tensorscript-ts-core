@@ -1,6 +1,6 @@
 {
   "name": "@tensorscript/core",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "ml with tensorflow",
   "main": "index.mjs",
   "scripts": {
@@ -12,6 +12,11 @@
     "type": "git",
     "url": "git+https://github.com/repetere/ts-core.git"
   },
+  "keywords": [
+    "tensorflow",
+    "machine learning",
+    "ai"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/repetere/ts-core/issues"
