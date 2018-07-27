@@ -38,4 +38,4 @@ git:
   submodules: false
 
 script:
-  - npm set progress=false && npm run test
+  - npm set progress=false && npm run test && npm run coverage
