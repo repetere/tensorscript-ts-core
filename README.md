@@ -1,6 +1,6 @@
 # @tensorscript/ts-core
 
-[![Coverage Status](https://coveralls.io/repos/github/repetere/@tensorscript/ts-core/badge.svg?branch=master)](https://coveralls.io/github/repetere/@tensorscript/ts-core?branch=master) [![Build Status](https://travis-ci.org/repetere/@tensorscript/ts-core.svg?branch=master)](https://travis-ci.org/repetere/@tensorscript/ts-core)
+[![Coverage Status](https://coveralls.io/repos/github/repetere/ts-core/badge.svg?branch=master)](https://coveralls.io/github/repetere/ts-core?branch=master) [![Build Status](https://travis-ci.org/repetere/ts-core.svg?branch=master)](https://travis-ci.org/repetere/ts-core)
 
 Machine Learning tools built with Tensorflow
 ### [Full Documentation](https://github.com/repetere/@tensorscript/ts-core/blob/master/docs/API.md)
