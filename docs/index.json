@@ -3,9 +3,9 @@
     "__docId__": 0,
     "kind": "file",
     "name": "lib/core.mjs",
-    "content": "/**\r\n * base class for tensorscript models\r\n * @interface TensorScriptModelInterface\r\n * @property {Object} settings - tensorflow model hyperparameters\r\n * @property {Object} model - tensorflow model\r\n */\r\nexport class TensorScriptModelInterface {\r\n  constructor(options = {}) {\r\n    this.settings = options;\r\n    this.model; //tf\r\n    return this;\r\n  }\r\n  /**\r\n   * returns the shape of an input matrix\r\n   * @example \r\n   * const input = [\r\n   *   [ 0, 1, ],\r\n   *   [ 1, 0, ],\r\n   * ];\r\n   * TensorScriptModelInterface.getInputShape(input) // => [2,2]\r\n   * @param {Array<number>} matrix - input matrix \r\n   * @return {Array<number>} returns the shape of a matrix (e.g. [2,2])\r\n   */\r\n  static getInputShape(matrix=[]) {\r\n    if (Array.isArray(matrix) === false || !matrix[ 0 ] || !matrix[ 0 ].length || Array.isArray(matrix[ 0 ]) === false) throw new TypeError('input must be a matrix');\r\n    const x_dimensions = matrix[ 0 ].length;\r\n    matrix.forEach(vector => {\r\n      if (vector.length !== x_dimensions) throw new SyntaxError('input must have the same length in each row');\r\n    });\r\n    return [\r\n      matrix.length, x_dimensions,\r\n    ];\r\n  }\r\n  /**\r\n   * asynchronously trains tensorflow model, must be implemented by tensorscript class\r\n   * @param x_matrix - independent variables\r\n   * @param y_matrix - dependent variables\r\n   * @return {Object} returns trained tensorflow model \r\n   */\r\n  train(x_matrix, y_matrix) {\r\n    throw new ReferenceError('train method is not implemented');\r\n  }\r\n  /**\r\n   * predicts new dependent variables\r\n   * @param matrix - new test independent variables\r\n   * @return {Promise} returns tensorflow prediction \r\n   */\r\n  predict(matrix) {\r\n    throw new ReferenceError('predict method is not implemented');\r\n  }\r\n  /**\r\n   * returns prediction values from tensorflow model\r\n   * @param x_matrix \r\n   * @return {Promise}\r\n   */\r\n  async calculate(x_matrix) {\r\n    return this.predict(x_matrix).data();\r\n  }\r\n}",
+    "content": "import tf from '@tensorflow/tfjs';\r\n\r\n/**\r\n * base class for tensorscript models\r\n * @interface TensorScriptModelInterface\r\n * @property {Object} settings - tensorflow model hyperparameters\r\n * @property {Object} model - tensorflow model\r\n */\r\nexport class TensorScriptModelInterface {\r\n  constructor(options = {}) {\r\n    this.settings = options;\r\n    this.tf = tf;\r\n    this.model; //tf\r\n    return this;\r\n  }\r\n  /**\r\n   * returns the shape of an input matrix\r\n   * @example \r\n   * const input = [\r\n   *   [ 0, 1, ],\r\n   *   [ 1, 0, ],\r\n   * ];\r\n   * TensorScriptModelInterface.getInputShape(input) // => [2,2]\r\n   * @param {Array<number>} matrix - input matrix \r\n   * @return {Array<number>} returns the shape of a matrix (e.g. [2,2])\r\n   */\r\n  static getInputShape(matrix=[]) {\r\n    if (Array.isArray(matrix) === false || !matrix[ 0 ] || !matrix[ 0 ].length || Array.isArray(matrix[ 0 ]) === false) throw new TypeError('input must be a matrix');\r\n    const x_dimensions = matrix[ 0 ].length;\r\n    matrix.forEach(vector => {\r\n      if (vector.length !== x_dimensions) throw new SyntaxError('input must have the same length in each row');\r\n    });\r\n    return [\r\n      matrix.length, x_dimensions,\r\n    ];\r\n  }\r\n  /**\r\n   * asynchronously trains tensorflow model, must be implemented by tensorscript class\r\n   * @param x_matrix - independent variables\r\n   * @param y_matrix - dependent variables\r\n   * @return {Object} returns trained tensorflow model \r\n   */\r\n  train(x_matrix, y_matrix) {\r\n    throw new ReferenceError('train method is not implemented');\r\n  }\r\n  /**\r\n   * predicts new dependent variables\r\n   * @param matrix - new test independent variables\r\n   * @return {Promise} returns tensorflow prediction \r\n   */\r\n  predict(matrix) {\r\n    throw new ReferenceError('predict method is not implemented');\r\n  }\r\n  /**\r\n   * returns prediction values from tensorflow model\r\n   * @param x_matrix \r\n   * @return {Promise}\r\n   */\r\n  async calculate(x_matrix) {\r\n    return this.predict(x_matrix).data();\r\n  }\r\n}",
     "static": true,
-    "longname": "/Users/yawjosephetse/Developer/github/test/ts-core/lib/core.mjs",
+    "longname": "/Users/yawjosephetse/Developer/github/repetere/ts-core/lib/core.mjs",
     "access": "public",
     "description": null,
     "lineNumber": 1
@@ -22,7 +22,7 @@
     "importPath": "@tensorscript/core/lib/core.mjs",
     "importStyle": "{TensorScriptModelInterface}",
     "description": "base class for tensorscript models",
-    "lineNumber": 7,
+    "lineNumber": 9,
     "properties": [
       {
         "nullable": null,
@@ -58,7 +58,7 @@
     "longname": "lib/core.mjs~TensorScriptModelInterface#constructor",
     "access": "public",
     "description": null,
-    "lineNumber": 8,
+    "lineNumber": 10,
     "undocument": true
   },
   {
@@ -70,11 +70,23 @@
     "longname": "lib/core.mjs~TensorScriptModelInterface#settings",
     "access": "public",
     "description": null,
-    "lineNumber": 9,
+    "lineNumber": 11,
     "undocument": true
   },
   {
     "__docId__": 4,
+    "kind": "member",
+    "name": "tf",
+    "memberof": "lib/core.mjs~TensorScriptModelInterface",
+    "static": false,
+    "longname": "lib/core.mjs~TensorScriptModelInterface#tf",
+    "access": "public",
+    "description": null,
+    "lineNumber": 12,
+    "undocument": true
+  },
+  {
+    "__docId__": 5,
     "kind": "method",
     "name": "getInputShape",
     "memberof": "lib/core.mjs~TensorScriptModelInterface",
@@ -87,7 +99,7 @@
     "examples": [
       "const input = [\n  [ 0, 1, ],\n  [ 1, 0, ],\n];\nTensorScriptModelInterface.getInputShape(input) // => [2,2]"
     ],
-    "lineNumber": 24,
+    "lineNumber": 27,
     "params": [
       {
         "nullable": null,
@@ -110,7 +122,7 @@
     }
   },
   {
-    "__docId__": 5,
+    "__docId__": 6,
     "kind": "method",
     "name": "train",
     "memberof": "lib/core.mjs~TensorScriptModelInterface",
@@ -120,7 +132,7 @@
     "longname": "lib/core.mjs~TensorScriptModelInterface#train",
     "access": "public",
     "description": "asynchronously trains tensorflow model, must be implemented by tensorscript class",
-    "lineNumber": 40,
+    "lineNumber": 43,
     "params": [
       {
         "nullable": null,
@@ -153,7 +165,7 @@
     }
   },
   {
-    "__docId__": 6,
+    "__docId__": 7,
     "kind": "method",
     "name": "predict",
     "memberof": "lib/core.mjs~TensorScriptModelInterface",
@@ -163,7 +175,7 @@
     "longname": "lib/core.mjs~TensorScriptModelInterface#predict",
     "access": "public",
     "description": "predicts new dependent variables",
-    "lineNumber": 48,
+    "lineNumber": 51,
     "params": [
       {
         "nullable": null,
@@ -186,7 +198,7 @@
     }
   },
   {
-    "__docId__": 7,
+    "__docId__": 8,
     "kind": "method",
     "name": "calculate",
     "memberof": "lib/core.mjs~TensorScriptModelInterface",
@@ -196,7 +208,7 @@
     "longname": "lib/core.mjs~TensorScriptModelInterface#calculate",
     "access": "public",
     "description": "returns prediction values from tensorflow model",
-    "lineNumber": 56,
+    "lineNumber": 59,
     "params": [
       {
         "nullable": null,
@@ -220,8 +232,8 @@
   },
   {
     "kind": "index",
-    "content": "# @tensorscript/ts-core\nMachine Learning tools built with Tensorflow\n",
-    "longname": "/Users/yawjosephetse/Developer/github/test/ts-core/README.md",
+    "content": "# @tensorscript/ts-core\n\n[![Coverage Status](https://coveralls.io/repos/github/repetere/ts-core/badge.svg?branch=master)](https://coveralls.io/github/repetere/ts-core?branch=master) [![Build Status](https://travis-ci.org/repetere/ts-core.svg?branch=master)](https://travis-ci.org/repetere/ts-core)\n\nMachine Learning tools built with Tensorflow\n### [Full Documentation](https://github.com/repetere/@tensorscript/ts-core/blob/master/docs/API.md)\n\n### Installation\n\n```sh\n$ npm i @tensorscript/ts-core\n```\n\n\n### Testing\n\n```sh\n$ npm i\n$ npm test\n```\n\n### Contributing\n\nFork, write tests and create a pull request!\n\n### Misc\n\nAs of Node 8, ES modules are still used behind a flag, when running natively as an ES module\n\n```sh\n$ node --experimental-modules my-machine-learning-script.mjs\n# Also there are native bindings that require Python 2.x, make sure if you're using Andaconda, you build with your Python 2.x bin\n$ npm i --python=/usr/bin/python\n ```\n\nLicense\n----\n\nMIT",
+    "longname": "/Users/yawjosephetse/Developer/github/repetere/ts-core/README.md",
     "name": "./README.md",
     "static": true,
     "access": "public"

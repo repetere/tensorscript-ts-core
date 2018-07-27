@@ -35,7 +35,9 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">lib/core.mjs</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import tf from &apos;@tensorflow/tfjs&apos;;
+
+/**
  * base class for tensorscript models
  * @interface TensorScriptModelInterface
  * @property {Object} settings - tensorflow model hyperparameters
@@ -44,6 +46,7 @@
 export class TensorScriptModelInterface {
   constructor(options = {}) {
     this.settings = options;
+    this.tf = tf;
     this.model; //tf
     return this;
   }

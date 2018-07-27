@@ -8,6 +8,8 @@ base class for tensorscript models
 
 ### `settings: *`
 
+### `tf: *`
+
 ### `getInputShape(matrix: Array<number>): Array<number>`
 
 returns the shape of an input matrix

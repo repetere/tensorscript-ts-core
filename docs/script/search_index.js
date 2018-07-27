@@ -36,6 +36,12 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "lib/core.mjs~tensorscriptmodelinterface#tf",
+    "class/lib/core.mjs~TensorScriptModelInterface.html#instance-member-tf",
+    "lib/core.mjs~TensorScriptModelInterface#tf",
+    "member"
+  ],
+  [
     "lib/core.mjs~tensorscriptmodelinterface#train",
     "class/lib/core.mjs~TensorScriptModelInterface.html#instance-method-train",
     "lib/core.mjs~TensorScriptModelInterface#train",
