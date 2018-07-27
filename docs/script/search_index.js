@@ -24,6 +24,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "lib/core.mjs~tensorscriptmodelinterface#getinputshape",
+    "class/lib/core.mjs~TensorScriptModelInterface.html#instance-member-getInputShape",
+    "lib/core.mjs~TensorScriptModelInterface#getInputShape",
+    "member"
+  ],
+  [
     "lib/core.mjs~tensorscriptmodelinterface#predict",
     "class/lib/core.mjs~TensorScriptModelInterface.html#instance-method-predict",
     "lib/core.mjs~TensorScriptModelInterface#predict",
