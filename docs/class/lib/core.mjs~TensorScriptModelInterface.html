@@ -253,15 +253,15 @@
       <div>
         <p>
           
-          <span data-ice="async">async</span>
           
-          <span class="code" data-ice="name"><span><a href="class/lib/core.mjs~TensorScriptModelInterface.html#instance-method-calculate">calculate</a></span></span><span class="code" data-ice="signature">(x_matrix: <span>*</span>): <span>Promise</span></span>
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/core.mjs~TensorScriptModelInterface.html#instance-method-calculate">calculate</a></span></span><span class="code" data-ice="signature">(matrix: <span>*</span>): <span>Promise</span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>returns prediction values from tensorflow model</p>
+        <div data-ice="description"><p>predicts new dependent variables</p>
 </div>
       </div>
     </td>
@@ -282,15 +282,15 @@
       <div>
         <p>
           
+          <span data-ice="async">async</span>
           
-          
-          <span class="code" data-ice="name"><span><a href="class/lib/core.mjs~TensorScriptModelInterface.html#instance-method-predict">predict</a></span></span><span class="code" data-ice="signature">(matrix: <span>*</span>): <span>Promise</span></span>
+          <span class="code" data-ice="name"><span><a href="class/lib/core.mjs~TensorScriptModelInterface.html#instance-method-predict">predict</a></span></span><span class="code" data-ice="signature">(x_matrix: <span>*</span>): <span>Promise</span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>predicts new dependent variables</p>
+        <div data-ice="description"><p>returns prediction values from tensorflow model</p>
 </div>
       </div>
     </td>
@@ -609,81 +609,9 @@ TensorScriptModelInterface.getInputShape(input) // =&gt; [2,2]</code></pre>
     
     
     
-    <span data-ice="async">async</span>
-    
-    <span class="code" data-ice="name">calculate</span><span class="code" data-ice="signature">(x_matrix: <span>*</span>): <span>Promise</span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/lib/core.mjs.html#lineNumber62">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  <div data-ice="description"><p>returns prediction values from tensorflow model</p>
-</div>
-
-  
-
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">x_matrix</td>
-      <td data-ice="type" class="code"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-</tbody>
-  </table>
-</div>
-</div>
-
-  <div class="return-params" data-ice="returnParams">
-    <h4>Return:</h4>
-    <table>
-      <tbody>
-        <tr>
-          <td class="return-type code" data-ice="returnType"><span>Promise</span></td>
-          
-        </tr>
-      </tbody>
-    </table>
-    <div data-ice="returnProperties">
-</div>
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-predict">
-    <span class="access" data-ice="access">public</span>
     
     
-    
-    
-    
-    <span class="code" data-ice="name">predict</span><span class="code" data-ice="signature">(matrix: <span>*</span>): <span>Promise</span></span>
+    <span class="code" data-ice="name">calculate</span><span class="code" data-ice="signature">(matrix: <span>*</span>): <span>Promise</span></span>
     <span class="right-info">
       
       
@@ -727,6 +655,78 @@ TensorScriptModelInterface.getInputShape(input) // =&gt; [2,2]</code></pre>
           <td class="return-type code" data-ice="returnType"><span>Promise</span></td>
           <td class="return-desc" data-ice="returnDescription"><p>returns tensorflow prediction</p>
 </td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-predict">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    <span data-ice="async">async</span>
+    
+    <span class="code" data-ice="name">predict</span><span class="code" data-ice="signature">(x_matrix: <span>*</span>): <span>Promise</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/core.mjs.html#lineNumber62">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>returns prediction values from tensorflow model</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">x_matrix</td>
+      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>Promise</span></td>
+          
         </tr>
       </tbody>
     </table>

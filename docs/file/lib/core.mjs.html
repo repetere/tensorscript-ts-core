@@ -88,16 +88,16 @@ export class TensorScriptModelInterface {
    * @param matrix - new test independent variables
    * @return {Promise} returns tensorflow prediction 
    */
-  predict(matrix) {
-    throw new ReferenceError(&apos;predict method is not implemented&apos;);
+  calculate(matrix) {
+    throw new ReferenceError(&apos;calculate method is not implemented&apos;);
   }
   /**
    * returns prediction values from tensorflow model
    * @param x_matrix 
    * @return {Promise}
    */
-  async calculate(x_matrix) {
-    return this.predict(x_matrix).data();
+  async predict(x_matrix) {
+    return this.calculate(x_matrix).data();
   }
 }</code></pre>
 

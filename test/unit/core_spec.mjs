@@ -73,26 +73,26 @@ describe('tensorscript core', () => {
       expect(TSMMLR.train.bind(null)).to.be.ok;
     });
   });
-  describe('predict', () => {
-    it('should throw an error if predict method is not implemented', () => {
+  describe('calculate', () => {
+    it('should throw an error if calculate method is not implemented', () => {
       class MLR extends TensorScriptModelInterface{
-        predict(x, y) {
+        calculate(x, y) {
           return true;
         }
       }
       const TSM = new TensorScriptModelInterface();
       const TSMMLR = new MLR();
-      expect(TSM.predict).to.be.a('function');
-      expect(TSM.predict.bind(null)).to.throw('predict method is not implemented');
-      expect(TSMMLR.predict).to.be.a('function');
-      expect(TSMMLR.predict.bind(null)).to.be.ok;
+      expect(TSM.calculate).to.be.a('function');
+      expect(TSM.calculate.bind(null)).to.throw('calculate method is not implemented');
+      expect(TSMMLR.calculate).to.be.a('function');
+      expect(TSMMLR.calculate.bind(null)).to.be.ok;
     });
   });
-  describe('calculate', () => {
+  describe('predict', () => {
     it('should asynchronously return data', (done) => {
       const TSM = new TensorScriptModelInterface();
       class MLR extends TensorScriptModelInterface{
-        predict(x, y) {
+        calculate(x, y) {
           return {
             data: ()=>new Promise((resolve) => {
               resolve(true);
@@ -102,9 +102,9 @@ describe('tensorscript core', () => {
         }
       }
       const TSMMLR = new MLR();
-      const calculatePromise = TSMMLR.calculate();
-      expect(TSMMLR.calculate).to.be.a('function');
-      expect(calculatePromise).to.be.a('promise');
+      const predictPromise = TSMMLR.predict();
+      expect(TSMMLR.predict).to.be.a('function');
+      expect(predictPromise).to.be.a('promise');
     });
   });
 });

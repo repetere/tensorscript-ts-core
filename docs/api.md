@@ -29,7 +29,7 @@ asynchronously trains tensorflow model, must be implemented by tensorscript clas
 | x_matrix | * |  | independent variables |
 | y_matrix | * |  | dependent variables |
 
-### `predict(matrix: *): Promise`
+### `calculate(matrix: *): Promise`
 
 predicts new dependent variables
 
@@ -37,7 +37,7 @@ predicts new dependent variables
 | --- | --- | --- | --- |
 | matrix | * |  | new test independent variables |
 
-### `calculate(x_matrix: *): Promise`
+### `predict(x_matrix: *): Promise`
 
 returns prediction values from tensorflow model
 
