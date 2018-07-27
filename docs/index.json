@@ -3,7 +3,7 @@
     "__docId__": 0,
     "kind": "file",
     "name": "lib/core.mjs",
-    "content": "import tf from '@tensorflow/tfjs';\r\n\r\n/**\r\n * base class for tensorscript models\r\n * @interface TensorScriptModelInterface\r\n * @property {Object} settings - tensorflow model hyperparameters\r\n * @property {Object} model - tensorflow model\r\n */\r\nexport class TensorScriptModelInterface {\r\n  constructor(options = {}) {\r\n    this.settings = options;\r\n    this.tf = tf;\r\n    this.model; //tf\r\n    return this;\r\n  }\r\n  /**\r\n   * returns the shape of an input matrix\r\n   * @example \r\n   * const input = [\r\n   *   [ 0, 1, ],\r\n   *   [ 1, 0, ],\r\n   * ];\r\n   * TensorScriptModelInterface.getInputShape(input) // => [2,2]\r\n   * @param {Array<number>} matrix - input matrix \r\n   * @return {Array<number>} returns the shape of a matrix (e.g. [2,2])\r\n   */\r\n  static getInputShape(matrix=[]) {\r\n    if (Array.isArray(matrix) === false || !matrix[ 0 ] || !matrix[ 0 ].length || Array.isArray(matrix[ 0 ]) === false) throw new TypeError('input must be a matrix');\r\n    const x_dimensions = matrix[ 0 ].length;\r\n    matrix.forEach(vector => {\r\n      if (vector.length !== x_dimensions) throw new SyntaxError('input must have the same length in each row');\r\n    });\r\n    return [\r\n      matrix.length, x_dimensions,\r\n    ];\r\n  }\r\n  /**\r\n   * asynchronously trains tensorflow model, must be implemented by tensorscript class\r\n   * @param x_matrix - independent variables\r\n   * @param y_matrix - dependent variables\r\n   * @return {Object} returns trained tensorflow model \r\n   */\r\n  train(x_matrix, y_matrix) {\r\n    throw new ReferenceError('train method is not implemented');\r\n  }\r\n  /**\r\n   * predicts new dependent variables\r\n   * @param matrix - new test independent variables\r\n   * @return {Promise} returns tensorflow prediction \r\n   */\r\n  predict(matrix) {\r\n    throw new ReferenceError('predict method is not implemented');\r\n  }\r\n  /**\r\n   * returns prediction values from tensorflow model\r\n   * @param x_matrix \r\n   * @return {Promise}\r\n   */\r\n  async calculate(x_matrix) {\r\n    return this.predict(x_matrix).data();\r\n  }\r\n}",
+    "content": "import tf from '@tensorflow/tfjs';\r\n\r\n/**\r\n * base class for tensorscript models\r\n * @interface TensorScriptModelInterface\r\n * @property {Object} settings - tensorflow model hyperparameters\r\n * @property {Object} model - tensorflow model\r\n * @property {Object} tf - tensorflow / tensorflow-node / tensorflow-node-gpu\r\n */\r\nexport class TensorScriptModelInterface {\r\n  constructor(options = {}, customTF = {}) {\r\n    this.settings = options;\r\n    this.tf = customTF || tf;\r\n    this.model; //tf\r\n    return this;\r\n  }\r\n  /**\r\n   * returns the shape of an input matrix\r\n   * @example \r\n   * const input = [\r\n   *   [ 0, 1, ],\r\n   *   [ 1, 0, ],\r\n   * ];\r\n   * TensorScriptModelInterface.getInputShape(input) // => [2,2]\r\n   * @param {Array<number>} matrix - input matrix \r\n   * @return {Array<number>} returns the shape of a matrix (e.g. [2,2])\r\n   */\r\n  static getInputShape(matrix=[]) {\r\n    if (Array.isArray(matrix) === false || !matrix[ 0 ] || !matrix[ 0 ].length || Array.isArray(matrix[ 0 ]) === false) throw new TypeError('input must be a matrix');\r\n    const x_dimensions = matrix[ 0 ].length;\r\n    matrix.forEach(vector => {\r\n      if (vector.length !== x_dimensions) throw new SyntaxError('input must have the same length in each row');\r\n    });\r\n    return [\r\n      matrix.length, x_dimensions,\r\n    ];\r\n  }\r\n  /**\r\n   * asynchronously trains tensorflow model, must be implemented by tensorscript class\r\n   * @param x_matrix - independent variables\r\n   * @param y_matrix - dependent variables\r\n   * @return {Object} returns trained tensorflow model \r\n   */\r\n  train(x_matrix, y_matrix) {\r\n    throw new ReferenceError('train method is not implemented');\r\n  }\r\n  /**\r\n   * predicts new dependent variables\r\n   * @param matrix - new test independent variables\r\n   * @return {Promise} returns tensorflow prediction \r\n   */\r\n  predict(matrix) {\r\n    throw new ReferenceError('predict method is not implemented');\r\n  }\r\n  /**\r\n   * returns prediction values from tensorflow model\r\n   * @param x_matrix \r\n   * @return {Promise}\r\n   */\r\n  async calculate(x_matrix) {\r\n    return this.predict(x_matrix).data();\r\n  }\r\n}",
     "static": true,
     "longname": "/Users/yawjosephetse/Developer/github/repetere/ts-core/lib/core.mjs",
     "access": "public",
@@ -22,7 +22,7 @@
     "importPath": "@tensorscript/core/lib/core.mjs",
     "importStyle": "{TensorScriptModelInterface}",
     "description": "base class for tensorscript models",
-    "lineNumber": 9,
+    "lineNumber": 10,
     "properties": [
       {
         "nullable": null,
@@ -43,6 +43,16 @@
         "optional": false,
         "name": "model",
         "description": "tensorflow model"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "tf",
+        "description": "tensorflow / tensorflow-node / tensorflow-node-gpu"
       }
     ],
     "interface": false
@@ -58,7 +68,7 @@
     "longname": "lib/core.mjs~TensorScriptModelInterface#constructor",
     "access": "public",
     "description": null,
-    "lineNumber": 10,
+    "lineNumber": 11,
     "undocument": true
   },
   {
@@ -70,7 +80,7 @@
     "longname": "lib/core.mjs~TensorScriptModelInterface#settings",
     "access": "public",
     "description": null,
-    "lineNumber": 11,
+    "lineNumber": 12,
     "undocument": true
   },
   {
@@ -82,7 +92,7 @@
     "longname": "lib/core.mjs~TensorScriptModelInterface#tf",
     "access": "public",
     "description": null,
-    "lineNumber": 12,
+    "lineNumber": 13,
     "undocument": true
   },
   {
@@ -99,7 +109,7 @@
     "examples": [
       "const input = [\n  [ 0, 1, ],\n  [ 1, 0, ],\n];\nTensorScriptModelInterface.getInputShape(input) // => [2,2]"
     ],
-    "lineNumber": 27,
+    "lineNumber": 28,
     "params": [
       {
         "nullable": null,
@@ -132,7 +142,7 @@
     "longname": "lib/core.mjs~TensorScriptModelInterface#train",
     "access": "public",
     "description": "asynchronously trains tensorflow model, must be implemented by tensorscript class",
-    "lineNumber": 43,
+    "lineNumber": 44,
     "params": [
       {
         "nullable": null,
@@ -175,7 +185,7 @@
     "longname": "lib/core.mjs~TensorScriptModelInterface#predict",
     "access": "public",
     "description": "predicts new dependent variables",
-    "lineNumber": 51,
+    "lineNumber": 52,
     "params": [
       {
         "nullable": null,
@@ -208,7 +218,7 @@
     "longname": "lib/core.mjs~TensorScriptModelInterface#calculate",
     "access": "public",
     "description": "returns prediction values from tensorflow model",
-    "lineNumber": 59,
+    "lineNumber": 60,
     "params": [
       {
         "nullable": null,
