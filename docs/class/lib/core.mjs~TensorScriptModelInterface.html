@@ -61,7 +61,7 @@
 
   
   
-  <div class="description" data-ice="description"><p>base class for tensorscript models</p>
+  <div class="description" data-ice="description"><p>Base class for tensorscript models</p>
 </div>
   
 
@@ -93,13 +93,13 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/lib/core.mjs~TensorScriptModelInterface.html#static-method-getInputShape">getInputShape</a></span></span><span class="code" data-ice="signature">(matrix: <span>Array</span>&lt;<span>number</span>&gt;): <span>Array</span>&lt;<span>number</span>&gt;</span>
+          <span class="code" data-ice="name"><span><a href="class/lib/core.mjs~TensorScriptModelInterface.html#static-method-getInputShape">getInputShape</a></span></span><span class="code" data-ice="signature">(matrix: <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;): <span>Array</span>&lt;<span>number</span>&gt;</span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>returns the shape of an input matrix</p>
+        <div data-ice="description"><p>Returns the shape of an input matrix</p>
 </div>
       </div>
     </td>
@@ -129,7 +129,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/lib/core.mjs~TensorScriptModelInterface.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">()</span>
+          <span class="code" data-ice="name"><span><a href="class/lib/core.mjs~TensorScriptModelInterface.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">(options: <span>Object</span>, customTF: <span>Object</span>)</span>
         </p>
       </div>
       <div>
@@ -246,7 +246,7 @@
       <span class="access" data-ice="access">public</span>
       
       
-      
+      <span class="abstract" data-ice="abstract">abstract</span>
       <span class="override" data-ice="override"></span>
     </td>
     <td>
@@ -255,13 +255,13 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/lib/core.mjs~TensorScriptModelInterface.html#instance-method-calculate">calculate</a></span></span><span class="code" data-ice="signature">(matrix: <span>*</span>): <span>Promise</span></span>
+          <span class="code" data-ice="name"><span><a href="class/lib/core.mjs~TensorScriptModelInterface.html#instance-method-calculate">calculate</a></span></span><span class="code" data-ice="signature">(matrix: <span>Array</span>&lt;<span>Array</span>&lt;<span>number&gt;</span>&gt;|<span>Array&lt;number</span>&gt;): {data: <span>Promise</span>}</span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>predicts new dependent variables</p>
+        <div data-ice="description"><p>Predicts new dependent variables</p>
 </div>
       </div>
     </td>
@@ -284,13 +284,13 @@
           
           <span data-ice="async">async</span>
           
-          <span class="code" data-ice="name"><span><a href="class/lib/core.mjs~TensorScriptModelInterface.html#instance-method-predict">predict</a></span></span><span class="code" data-ice="signature">(x_matrix: <span>*</span>): <span>Promise</span></span>
+          <span class="code" data-ice="name"><span><a href="class/lib/core.mjs~TensorScriptModelInterface.html#instance-method-predict">predict</a></span></span><span class="code" data-ice="signature">(x_matrix: <span>Array</span>&lt;<span>Array</span>&lt;<span>number&gt;</span>&gt;|<span>Array&lt;number</span>&gt;): <span>Promise</span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>returns prediction values from tensorflow model</p>
+        <div data-ice="description"><p>Returns prediction values from tensorflow model</p>
 </div>
       </div>
     </td>
@@ -304,7 +304,7 @@
       <span class="access" data-ice="access">public</span>
       
       
-      
+      <span class="abstract" data-ice="abstract">abstract</span>
       <span class="override" data-ice="override"></span>
     </td>
     <td>
@@ -313,13 +313,13 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/lib/core.mjs~TensorScriptModelInterface.html#instance-method-train">train</a></span></span><span class="code" data-ice="signature">(x_matrix: <span>*</span>, y_matrix: <span>*</span>): <span>Object</span></span>
+          <span class="code" data-ice="name"><span><a href="class/lib/core.mjs~TensorScriptModelInterface.html#instance-method-train">train</a></span></span><span class="code" data-ice="signature">(x_matrix: <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;, y_matrix: <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;): <span>Object</span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>asynchronously trains tensorflow model, must be implemented by tensorscript class</p>
+        <div data-ice="description"><p>Asynchronously trains tensorflow model, must be implemented by tensorscript class</p>
 </div>
       </div>
     </td>
@@ -345,18 +345,18 @@
     
     
     
-    <span class="code" data-ice="name">getInputShape</span><span class="code" data-ice="signature">(matrix: <span>Array</span>&lt;<span>number</span>&gt;): <span>Array</span>&lt;<span>number</span>&gt;</span>
+    <span class="code" data-ice="name">getInputShape</span><span class="code" data-ice="signature">(matrix: <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;): <span>Array</span>&lt;<span>number</span>&gt;</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/core.mjs.html#lineNumber30">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/core.mjs.html#lineNumber35">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>returns the shape of an input matrix</p>
+  <div data-ice="description"><p>Returns the shape of an input matrix</p>
 </div>
 
   
@@ -371,7 +371,7 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">matrix</td>
-      <td data-ice="type" class="code"><span>Array</span>&lt;<span>number</span>&gt;</td>
+      <td data-ice="type" class="code"><span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;</td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>input matrix</p>
 </td>
@@ -433,11 +433,11 @@ TensorScriptModelInterface.getInputShape(input) // =&gt; [2,2]</code></pre>
     
     
     
-    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">()</span>
+    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">(options: <span>Object</span>, customTF: <span>Object</span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/core.mjs.html#lineNumber12">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/core.mjs.html#lineNumber16">source</a></span></span>
     </span>
   </h3>
 
@@ -448,7 +448,31 @@ TensorScriptModelInterface.getInputShape(input) // =&gt; [2,2]</code></pre>
 
   
 
-  <div data-ice="properties">
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">options</td>
+      <td data-ice="type" class="code"><span>Object</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>tensorflow model hyperparameters</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">customTF</td>
+      <td data-ice="type" class="code"><span>Object</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>custom, overridale tensorflow / tensorflow-node / tensorflow-node-gpu</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
 </div>
 
   
@@ -483,7 +507,7 @@ TensorScriptModelInterface.getInputShape(input) // =&gt; [2,2]</code></pre>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/core.mjs.html#lineNumber15">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/core.mjs.html#lineNumber19">source</a></span></span>
     </span>
   </h3>
 
@@ -526,7 +550,7 @@ TensorScriptModelInterface.getInputShape(input) // =&gt; [2,2]</code></pre>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/core.mjs.html#lineNumber13">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/core.mjs.html#lineNumber17">source</a></span></span>
     </span>
   </h3>
 
@@ -569,7 +593,7 @@ TensorScriptModelInterface.getInputShape(input) // =&gt; [2,2]</code></pre>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/core.mjs.html#lineNumber14">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/core.mjs.html#lineNumber18">source</a></span></span>
     </span>
   </h3>
 
@@ -608,21 +632,21 @@ TensorScriptModelInterface.getInputShape(input) // =&gt; [2,2]</code></pre>
     <span class="access" data-ice="access">public</span>
     
     
+    <span class="abstract" data-ice="abstract">abstract</span>
     
     
-    
-    <span class="code" data-ice="name">calculate</span><span class="code" data-ice="signature">(matrix: <span>*</span>): <span>Promise</span></span>
+    <span class="code" data-ice="name">calculate</span><span class="code" data-ice="signature">(matrix: <span>Array</span>&lt;<span>Array</span>&lt;<span>number&gt;</span>&gt;|<span>Array&lt;number</span>&gt;): {data: <span>Promise</span>}</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/core.mjs.html#lineNumber54">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/core.mjs.html#lineNumber61">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>predicts new dependent variables</p>
+  <div data-ice="description"><p>Predicts new dependent variables</p>
 </div>
 
   
@@ -637,7 +661,7 @@ TensorScriptModelInterface.getInputShape(input) // =&gt; [2,2]</code></pre>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">matrix</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span>Array</span>&lt;<span>Array</span>&lt;<span>number&gt;</span>&gt;|<span>Array&lt;number</span>&gt;</td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>new test independent variables</p>
 </td>
@@ -652,7 +676,7 @@ TensorScriptModelInterface.getInputShape(input) // =&gt; [2,2]</code></pre>
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>Promise</span></td>
+          <td class="return-type code" data-ice="returnType">{data: <span>Promise</span>}</td>
           <td class="return-desc" data-ice="returnDescription"><p>returns tensorflow prediction</p>
 </td>
         </tr>
@@ -685,18 +709,18 @@ TensorScriptModelInterface.getInputShape(input) // =&gt; [2,2]</code></pre>
     
     <span data-ice="async">async</span>
     
-    <span class="code" data-ice="name">predict</span><span class="code" data-ice="signature">(x_matrix: <span>*</span>): <span>Promise</span></span>
+    <span class="code" data-ice="name">predict</span><span class="code" data-ice="signature">(x_matrix: <span>Array</span>&lt;<span>Array</span>&lt;<span>number&gt;</span>&gt;|<span>Array&lt;number</span>&gt;): <span>Promise</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/core.mjs.html#lineNumber62">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/core.mjs.html#lineNumber69">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>returns prediction values from tensorflow model</p>
+  <div data-ice="description"><p>Returns prediction values from tensorflow model</p>
 </div>
 
   
@@ -711,9 +735,10 @@ TensorScriptModelInterface.getInputShape(input) // =&gt; [2,2]</code></pre>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">x_matrix</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span>Array</span>&lt;<span>Array</span>&lt;<span>number&gt;</span>&gt;|<span>Array&lt;number</span>&gt;</td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>new test independent variables</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -754,21 +779,21 @@ TensorScriptModelInterface.getInputShape(input) // =&gt; [2,2]</code></pre>
     <span class="access" data-ice="access">public</span>
     
     
+    <span class="abstract" data-ice="abstract">abstract</span>
     
     
-    
-    <span class="code" data-ice="name">train</span><span class="code" data-ice="signature">(x_matrix: <span>*</span>, y_matrix: <span>*</span>): <span>Object</span></span>
+    <span class="code" data-ice="name">train</span><span class="code" data-ice="signature">(x_matrix: <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;, y_matrix: <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;): <span>Object</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/core.mjs.html#lineNumber46">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/core.mjs.html#lineNumber52">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>asynchronously trains tensorflow model, must be implemented by tensorscript class</p>
+  <div data-ice="description"><p>Asynchronously trains tensorflow model, must be implemented by tensorscript class</p>
 </div>
 
   
@@ -783,14 +808,14 @@ TensorScriptModelInterface.getInputShape(input) // =&gt; [2,2]</code></pre>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">x_matrix</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;</td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>independent variables</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">y_matrix</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;</td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>dependent variables</p>
 </td>

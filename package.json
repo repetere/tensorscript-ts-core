@@ -28,7 +28,7 @@
     "name": "Yaw Etse",
     "url": "https://github.com/yawetse"
   },
-  "homepage": "https://github.com/repetere/ts-core#readme",
+  "homepage": "https://repetere.github.io/ts-core",
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-plugin-istanbul": "^4.1.6",

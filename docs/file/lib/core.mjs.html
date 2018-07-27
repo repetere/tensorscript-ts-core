@@ -38,7 +38,7 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import tf from &apos;@tensorflow/tfjs&apos;;
 
 /**
- * base class for tensorscript models
+ * Base class for tensorscript models
  * @interface TensorScriptModelInterface
  * @property {Object} settings - tensorflow model hyperparameters
  * @property {Object} model - tensorflow model
@@ -46,6 +46,10 @@
  * @property {Object} tf - tensorflow / tensorflow-node / tensorflow-node-gpu
  */
 export class TensorScriptModelInterface {
+  /**
+   * @param {Object} options - tensorflow model hyperparameters
+   * @param {Object} customTF - custom, overridale tensorflow / tensorflow-node / tensorflow-node-gpu
+   */
   constructor(options = {}, customTF) {
     this.settings = options;
     this.tf = customTF || tf;
@@ -54,14 +58,15 @@ export class TensorScriptModelInterface {
     return this;
   }
   /**
-   * returns the shape of an input matrix
+   * Returns the shape of an input matrix
+   * @function
    * @example 
    * const input = [
    *   [ 0, 1, ],
    *   [ 1, 0, ],
    * ];
    * TensorScriptModelInterface.getInputShape(input) // =&gt; [2,2]
-   * @param {Array&lt;number&gt;} matrix - input matrix 
+   * @param {Array&lt;Array&lt;number&gt;&gt;} matrix - input matrix 
    * @return {Array&lt;number&gt;} returns the shape of a matrix (e.g. [2,2])
    */
   static getInputShape(matrix=[]) {
@@ -75,26 +80,28 @@ export class TensorScriptModelInterface {
     ];
   }
   /**
-   * asynchronously trains tensorflow model, must be implemented by tensorscript class
-   * @param x_matrix - independent variables
-   * @param y_matrix - dependent variables
+   * Asynchronously trains tensorflow model, must be implemented by tensorscript class
+   * @abstract 
+   * @param {Array&lt;Array&lt;number&gt;&gt;} x_matrix - independent variables
+   * @param {Array&lt;Array&lt;number&gt;&gt;} y_matrix - dependent variables
    * @return {Object} returns trained tensorflow model 
    */
   train(x_matrix, y_matrix) {
     throw new ReferenceError(&apos;train method is not implemented&apos;);
   }
   /**
-   * predicts new dependent variables
-   * @param matrix - new test independent variables
-   * @return {Promise} returns tensorflow prediction 
+   * Predicts new dependent variables
+   * @abstract 
+   * @param {Array&lt;Array&lt;number&gt;&gt;|Array&lt;number&gt;} matrix - new test independent variables
+   * @return {{data: Promise}} returns tensorflow prediction 
    */
   calculate(matrix) {
     throw new ReferenceError(&apos;calculate method is not implemented&apos;);
   }
   /**
-   * returns prediction values from tensorflow model
-   * @param x_matrix 
-   * @return {Promise}
+   * Returns prediction values from tensorflow model
+   * @param {Array&lt;Array&lt;number&gt;&gt;|Array&lt;number&gt;} x_matrix - new test independent variables 
+   * @return {Promise} 
    */
   async predict(x_matrix) {
     return this.calculate(x_matrix).data();
