@@ -1,6 +1,15 @@
 {
-  "coverage": "0%",
-  "expectCount": 0,
-  "actualCount": 0,
-  "files": {}
+  "coverage": "71.42%",
+  "expectCount": 7,
+  "actualCount": 5,
+  "files": {
+    "lib/core.mjs": {
+      "expectCount": 7,
+      "actualCount": 5,
+      "undocumentLines": [
+        8,
+        9
+      ]
+    }
+  }
 }
