@@ -6,15 +6,15 @@ Base class for tensorscript models
 
 ### `constructor(options: Object, customTF: Object, properties: {model:Object,tf:Object,})`
 
-### `settings: *`
+### `settings: Object`
 
-### `model: *`
+### `model: Object`
 
-### `tf: *`
+### `tf: Object`
 
-### `reshape: *`
+### `reshape: Function`
 
-### `getInputShape: *`
+### `getInputShape: Function`
 
 ### `reshape(array: Array<number>, shape: Array<number>): Array<Array<number>>`
 
