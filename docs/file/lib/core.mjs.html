@@ -142,17 +142,22 @@ export class TensorScriptModelInterface {
   }
   /**
    * Returns prediction values from tensorflow model
-   * @param {Array&lt;Array&lt;number&gt;&gt;|Array&lt;number&gt;} x_matrix - new test independent variables 
+   * @param {Array&lt;Array&lt;number&gt;&gt;|Array&lt;number&gt;} input_matrix - new test independent variables 
    * @param {Boolean} [options.json=true] - return object instead of typed array
    * @param {Boolean} [options.probability=true] - return real values instead of integers
    * @return {Array&lt;number&gt;|Array&lt;Array&lt;number&gt;&gt;} predicted model values
    */
-  async predict(x_matrix, options = {}) {
+  async predict(input_matrix, options = {}) {
+    if (!input_matrix || Array.isArray(input_matrix)===false) throw new Error(&apos;invalid input matrix&apos;);
+    const x_matrix = (Array.isArray(input_matrix[ 0 ]))
+      ? input_matrix
+      : [
+        input_matrix,
+      ];
     const config = Object.assign({
       json: true,
       probability: true,
     }, options);
-    if (!x_matrix || Array.isArray(x_matrix)===false) throw new Error(&apos;invalid input matrix&apos;);
     return this.calculate(x_matrix)
       .data()
       .then(predictions =&gt; {
