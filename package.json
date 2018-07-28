@@ -1,6 +1,6 @@
 {
   "name": "@tensorscript/core",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "ml with tensorflow",
   "main": "index.mjs",
   "scripts": {

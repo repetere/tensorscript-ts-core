@@ -42,20 +42,53 @@
  * @interface TensorScriptModelInterface
  * @property {Object} settings - tensorflow model hyperparameters
  * @property {Object} model - tensorflow model
- * @property {Function} getInputShape - static TensorScriptModelInterface
  * @property {Object} tf - tensorflow / tensorflow-node / tensorflow-node-gpu
+ * @property {Function} reshape - static reshape array function
+ * @property {Function} getInputShape - static TensorScriptModelInterface
  */
 export class TensorScriptModelInterface {
   /**
    * @param {Object} options - tensorflow model hyperparameters
    * @param {Object} customTF - custom, overridale tensorflow / tensorflow-node / tensorflow-node-gpu
+   * @param {{model:Object,tf:Object,}} properties - extra instance properties
    */
-  constructor(options = {}, customTF) {
+  constructor(options = {}, properties = {}) {
     this.settings = options;
-    this.tf = customTF || tf;
+    this.model = properties.model; //tf
+    this.tf = properties.tf || tf;
+    this.reshape = TensorScriptModelInterface.reshape;
     this.getInputShape = TensorScriptModelInterface.getInputShape;
-    this.model; //tf
     return this;
+  }
+  /**
+   * Reshapes an array
+   * @function
+   * @example 
+   * const array = [ 0, 1, 1, 0, ];
+   * const shape = [2,2];
+   * TensorScriptModelInterface.reshape(array,shape) // =&gt; 
+   * [
+   *   [ 0, 1, ],
+   *   [ 1, 0, ],
+   * ];
+   * @param {Array&lt;number&gt;} array - input array 
+   * @param {Array&lt;number&gt;} shape - shape array 
+   * @return {Array&lt;Array&lt;number&gt;&gt;} returns a matrix with the defined shape
+   */
+  static reshape(array, shape) {
+    const rows = shape[ 0 ];
+    const cols = shape[ 1 ];
+    const shapedArray = array.reduce((result, val, i) =&gt; { 
+      const index = Math.floor(i / cols);
+      if (Array.isArray(result[ index ])) {
+        result[ index ].push(val);
+      } else {
+        result[ index ] = [val,];
+      }
+      return result;
+    }, []);
+    if (shapedArray.length !== rows) throw new SyntaxError(`specified shape (${shape}) is compatible with input array or length (${array.length})`);
+    return shapedArray;
   }
   /**
    * Returns the shape of an input matrix
@@ -99,12 +132,41 @@ export class TensorScriptModelInterface {
     throw new ReferenceError(&apos;calculate method is not implemented&apos;);
   }
   /**
+   * Loads a saved tensoflow / keras model
+   * @param {Object} options - tensorflow load model options
+   * @return {Object} tensorflow model
+   */
+  async loadModel(options) {
+    this.model = await this.tf.loadModel(options);
+    return this.model;
+  }
+  /**
    * Returns prediction values from tensorflow model
    * @param {Array&lt;Array&lt;number&gt;&gt;|Array&lt;number&gt;} x_matrix - new test independent variables 
-   * @return {Promise} 
+   * @param {Boolean} [options.json=true] - return object instead of typed array
+   * @param {Boolean} [options.json=true] - return real values instead of integers
+   * @return {Array&lt;number&gt;|Array&lt;Array&lt;number&gt;&gt;} predicted model values
    */
-  async predict(x_matrix) {
-    return this.calculate(x_matrix).data();
+  async predict(x_matrix, options = {}) {
+    const config = Object.assign({
+      json: true,
+      probability: true,
+    }, options);
+    if (!x_matrix || Array.isArray(x_matrix)===false) throw new Error(&apos;invalid input matrix&apos;);
+    return this.calculate(x_matrix)
+      .data()
+      .then(predictions =&gt; {
+        if (config.json === false) {
+          return predictions;
+        } else {
+          const shape = [x_matrix.length, this.yShape[ 1 ],];
+          const predictionValues = (options.probability === false) ? Array.from(predictions).map(Math.round) : Array.from(predictions);
+          return this.reshape(predictionValues, shape);
+        }
+      })
+      .catch(e =&gt; {
+        throw e; 
+      });
   }
 }</code></pre>
 

@@ -30,10 +30,28 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "lib/core.mjs~tensorscriptmodelinterface#loadmodel",
+    "class/lib/core.mjs~TensorScriptModelInterface.html#instance-method-loadModel",
+    "lib/core.mjs~TensorScriptModelInterface#loadModel",
+    "method"
+  ],
+  [
+    "lib/core.mjs~tensorscriptmodelinterface#model",
+    "class/lib/core.mjs~TensorScriptModelInterface.html#instance-member-model",
+    "lib/core.mjs~TensorScriptModelInterface#model",
+    "member"
+  ],
+  [
     "lib/core.mjs~tensorscriptmodelinterface#predict",
     "class/lib/core.mjs~TensorScriptModelInterface.html#instance-method-predict",
     "lib/core.mjs~TensorScriptModelInterface#predict",
     "method"
+  ],
+  [
+    "lib/core.mjs~tensorscriptmodelinterface#reshape",
+    "class/lib/core.mjs~TensorScriptModelInterface.html#instance-member-reshape",
+    "lib/core.mjs~TensorScriptModelInterface#reshape",
+    "member"
   ],
   [
     "lib/core.mjs~tensorscriptmodelinterface#settings",
@@ -57,6 +75,12 @@ window.esdocSearchIndex = [
     "lib/core.mjs~tensorscriptmodelinterface.getinputshape",
     "class/lib/core.mjs~TensorScriptModelInterface.html#static-method-getInputShape",
     "lib/core.mjs~TensorScriptModelInterface.getInputShape",
+    "method"
+  ],
+  [
+    "lib/core.mjs~tensorscriptmodelinterface.reshape",
+    "class/lib/core.mjs~TensorScriptModelInterface.html#static-method-reshape",
+    "lib/core.mjs~TensorScriptModelInterface.reshape",
     "method"
   ]
 ]
