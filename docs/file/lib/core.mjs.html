@@ -144,7 +144,7 @@ export class TensorScriptModelInterface {
    * Returns prediction values from tensorflow model
    * @param {Array&lt;Array&lt;number&gt;&gt;|Array&lt;number&gt;} x_matrix - new test independent variables 
    * @param {Boolean} [options.json=true] - return object instead of typed array
-   * @param {Boolean} [options.json=true] - return real values instead of integers
+   * @param {Boolean} [options.probability=true] - return real values instead of integers
    * @return {Array&lt;number&gt;|Array&lt;Array&lt;number&gt;&gt;} predicted model values
    */
   async predict(x_matrix, options = {}) {

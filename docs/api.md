@@ -58,7 +58,7 @@ Loads a saved tensoflow / keras model
 | --- | --- | --- | --- |
 | options | Object |  | tensorflow load model options |
 
-### `predict(x_matrix: Array<Array<number>>|Array<number>, options.json: Boolean, options.json: Boolean): Array<number>|Array<Array<number>>`
+### `predict(x_matrix: Array<Array<number>>|Array<number>, options.json: Boolean, options.probability: Boolean): Array<number>|Array<Array<number>>`
 
 Returns prediction values from tensorflow model
 
@@ -66,6 +66,6 @@ Returns prediction values from tensorflow model
 | --- | --- | --- | --- |
 | x_matrix | Array<Array<number>>|Array<number> |  | new test independent variables |
 | options.json | Boolean | optional: true, default: true | return object instead of typed array |
-| options.json | Boolean | optional: true, default: true | return real values instead of integers |
+| options.probability | Boolean | optional: true, default: true | return real values instead of integers |
 
 # Function
