@@ -3,7 +3,7 @@
     "__docId__": 0,
     "kind": "file",
     "name": "lib/core.mjs",
-    "content": "import tf from '@tensorflow/tfjs';\r\n\r\n/**\r\n * Base class for tensorscript models\r\n * @interface TensorScriptModelInterface\r\n */\r\nexport class TensorScriptModelInterface {\r\n  /**\r\n   * @param {Object} options - tensorflow model hyperparameters\r\n   * @param {Object} customTF - custom, overridale tensorflow / tensorflow-node / tensorflow-node-gpu\r\n   * @param {{model:Object,tf:Object,}} properties - extra instance properties\r\n   */\r\n  constructor(options = {}, properties = {}) {\r\n    /**\r\n     * @type {Object}\r\n     * @property {Object} settings - tensorflow model hyperparameters\r\n     * @property {Object} model - tensorflow model\r\n     * @property {Object} tf - tensorflow / tensorflow-node / tensorflow-node-gpu\r\n     * @property {Function} reshape - static reshape array function\r\n     * @property {Function} getInputShape - static TensorScriptModelInterface\r\n     */\r\n    this.settings = options;\r\n    this.model = properties.model;\r\n    this.tf = properties.tf || tf;\r\n    this.reshape = TensorScriptModelInterface.reshape;\r\n    this.getInputShape = TensorScriptModelInterface.getInputShape;\r\n    return this;\r\n  }\r\n  /**\r\n   * Reshapes an array\r\n   * @function\r\n   * @example \r\n   * const array = [ 0, 1, 1, 0, ];\r\n   * const shape = [2,2];\r\n   * TensorScriptModelInterface.reshape(array,shape) // => \r\n   * [\r\n   *   [ 0, 1, ],\r\n   *   [ 1, 0, ],\r\n   * ];\r\n   * @param {Array<number>} array - input array \r\n   * @param {Array<number>} shape - shape array \r\n   * @return {Array<Array<number>>} returns a matrix with the defined shape\r\n   */\r\n  static reshape(array, shape) {\r\n    const rows = shape[ 0 ];\r\n    const cols = shape[ 1 ];\r\n    const shapedArray = array.reduce((result, val, i) => { \r\n      const index = Math.floor(i / cols);\r\n      if (Array.isArray(result[ index ])) {\r\n        result[ index ].push(val);\r\n      } else {\r\n        result[ index ] = [val,];\r\n      }\r\n      return result;\r\n    }, []);\r\n    if (shapedArray.length !== rows) throw new SyntaxError(`specified shape (${shape}) is compatible with input array or length (${array.length})`);\r\n    return shapedArray;\r\n  }\r\n  /**\r\n   * Returns the shape of an input matrix\r\n   * @function\r\n   * @example \r\n   * const input = [\r\n   *   [ 0, 1, ],\r\n   *   [ 1, 0, ],\r\n   * ];\r\n   * TensorScriptModelInterface.getInputShape(input) // => [2,2]\r\n   * @param {Array<Array<number>>} matrix - input matrix \r\n   * @return {Array<number>} returns the shape of a matrix (e.g. [2,2])\r\n   */\r\n  static getInputShape(matrix=[]) {\r\n    if (Array.isArray(matrix) === false || !matrix[ 0 ] || !matrix[ 0 ].length || Array.isArray(matrix[ 0 ]) === false) throw new TypeError('input must be a matrix');\r\n    const x_dimensions = matrix[ 0 ].length;\r\n    matrix.forEach(vector => {\r\n      if (vector.length !== x_dimensions) throw new SyntaxError('input must have the same length in each row');\r\n    });\r\n    return [\r\n      matrix.length, x_dimensions,\r\n    ];\r\n  }\r\n  /**\r\n   * Asynchronously trains tensorflow model, must be implemented by tensorscript class\r\n   * @abstract \r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @return {Object} returns trained tensorflow model \r\n   */\r\n  train(x_matrix, y_matrix) {\r\n    throw new ReferenceError('train method is not implemented');\r\n  }\r\n  /**\r\n   * Predicts new dependent variables\r\n   * @abstract \r\n   * @param {Array<Array<number>>|Array<number>} matrix - new test independent variables\r\n   * @return {{data: Promise}} returns tensorflow prediction \r\n   */\r\n  calculate(matrix) {\r\n    throw new ReferenceError('calculate method is not implemented');\r\n  }\r\n  /**\r\n   * Loads a saved tensoflow / keras model\r\n   * @param {Object} options - tensorflow load model options\r\n   * @return {Object} tensorflow model\r\n   */\r\n  async loadModel(options) {\r\n    this.model = await this.tf.loadModel(options);\r\n    return this.model;\r\n  }\r\n  /**\r\n   * Returns prediction values from tensorflow model\r\n   * @param {Array<Array<number>>|Array<number>} input_matrix - new test independent variables \r\n   * @param {Boolean} [options.json=true] - return object instead of typed array\r\n   * @param {Boolean} [options.probability=true] - return real values instead of integers\r\n   * @return {Array<number>|Array<Array<number>>} predicted model values\r\n   */\r\n  async predict(input_matrix, options = {}) {\r\n    if (!input_matrix || Array.isArray(input_matrix)===false) throw new Error('invalid input matrix');\r\n    const x_matrix = (Array.isArray(input_matrix[ 0 ]))\r\n      ? input_matrix\r\n      : [\r\n        input_matrix,\r\n      ];\r\n    const config = Object.assign({\r\n      json: true,\r\n      probability: true,\r\n    }, options);\r\n    return this.calculate(x_matrix)\r\n      .data()\r\n      .then(predictions => {\r\n        if (config.json === false) {\r\n          return predictions;\r\n        } else {\r\n          const shape = [x_matrix.length, this.yShape[ 1 ],];\r\n          const predictionValues = (options.probability === false) ? Array.from(predictions).map(Math.round) : Array.from(predictions);\r\n          return this.reshape(predictionValues, shape);\r\n        }\r\n      })\r\n      .catch(e => {\r\n        throw e; \r\n      });\r\n  }\r\n}",
+    "content": "import tf from '@tensorflow/tfjs';\r\n\r\n/**\r\n * Base class for tensorscript models\r\n * @interface TensorScriptModelInterface\r\n */\r\nexport class TensorScriptModelInterface {\r\n  /**\r\n   * @param {Object} options - tensorflow model hyperparameters\r\n   * @param {Object} customTF - custom, overridale tensorflow / tensorflow-node / tensorflow-node-gpu\r\n   * @param {{model:Object,tf:Object,}} properties - extra instance properties\r\n   * @property {Object} settings - tensorflow model hyperparameters\r\n   * @property {Object} model - tensorflow model\r\n   * @property {Object} tf - tensorflow / tensorflow-node / tensorflow-node-gpu\r\n   * @property {Function} reshape - static reshape array function\r\n   * @property {Function} getInputShape - static TensorScriptModelInterface\r\n   */\r\n  constructor(options = {}, properties = {}) {\r\n    this.settings = options;\r\n    this.model = properties.model;\r\n    this.tf = properties.tf || tf;\r\n    this.reshape = TensorScriptModelInterface.reshape;\r\n    this.getInputShape = TensorScriptModelInterface.getInputShape;\r\n    return this;\r\n  }\r\n  /**\r\n   * Reshapes an array\r\n   * @function\r\n   * @example \r\n   * const array = [ 0, 1, 1, 0, ];\r\n   * const shape = [2,2];\r\n   * TensorScriptModelInterface.reshape(array,shape) // => \r\n   * [\r\n   *   [ 0, 1, ],\r\n   *   [ 1, 0, ],\r\n   * ];\r\n   * @param {Array<number>} array - input array \r\n   * @param {Array<number>} shape - shape array \r\n   * @return {Array<Array<number>>} returns a matrix with the defined shape\r\n   */\r\n  static reshape(array, shape) {\r\n    const rows = shape[ 0 ];\r\n    const cols = shape[ 1 ];\r\n    const shapedArray = array.reduce((result, val, i) => { \r\n      const index = Math.floor(i / cols);\r\n      if (Array.isArray(result[ index ])) {\r\n        result[ index ].push(val);\r\n      } else {\r\n        result[ index ] = [val,];\r\n      }\r\n      return result;\r\n    }, []);\r\n    if (shapedArray.length !== rows) throw new SyntaxError(`specified shape (${shape}) is compatible with input array or length (${array.length})`);\r\n    return shapedArray;\r\n  }\r\n  /**\r\n   * Returns the shape of an input matrix\r\n   * @function\r\n   * @example \r\n   * const input = [\r\n   *   [ 0, 1, ],\r\n   *   [ 1, 0, ],\r\n   * ];\r\n   * TensorScriptModelInterface.getInputShape(input) // => [2,2]\r\n   * @param {Array<Array<number>>} matrix - input matrix \r\n   * @return {Array<number>} returns the shape of a matrix (e.g. [2,2])\r\n   */\r\n  static getInputShape(matrix=[]) {\r\n    if (Array.isArray(matrix) === false || !matrix[ 0 ] || !matrix[ 0 ].length || Array.isArray(matrix[ 0 ]) === false) throw new TypeError('input must be a matrix');\r\n    const x_dimensions = matrix[ 0 ].length;\r\n    matrix.forEach(vector => {\r\n      if (vector.length !== x_dimensions) throw new SyntaxError('input must have the same length in each row');\r\n    });\r\n    return [\r\n      matrix.length, x_dimensions,\r\n    ];\r\n  }\r\n  /**\r\n   * Asynchronously trains tensorflow model, must be implemented by tensorscript class\r\n   * @abstract \r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @return {Object} returns trained tensorflow model \r\n   */\r\n  train(x_matrix, y_matrix) {\r\n    throw new ReferenceError('train method is not implemented');\r\n  }\r\n  /**\r\n   * Predicts new dependent variables\r\n   * @abstract \r\n   * @param {Array<Array<number>>|Array<number>} matrix - new test independent variables\r\n   * @return {{data: Promise}} returns tensorflow prediction \r\n   */\r\n  calculate(matrix) {\r\n    throw new ReferenceError('calculate method is not implemented');\r\n  }\r\n  /**\r\n   * Loads a saved tensoflow / keras model\r\n   * @param {Object} options - tensorflow load model options\r\n   * @return {Object} tensorflow model\r\n   */\r\n  async loadModel(options) {\r\n    this.model = await this.tf.loadModel(options);\r\n    return this.model;\r\n  }\r\n  /**\r\n   * Returns prediction values from tensorflow model\r\n   * @param {Array<Array<number>>|Array<number>} input_matrix - new test independent variables \r\n   * @param {Boolean} [options.json=true] - return object instead of typed array\r\n   * @param {Boolean} [options.probability=true] - return real values instead of integers\r\n   * @return {Array<number>|Array<Array<number>>} predicted model values\r\n   */\r\n  async predict(input_matrix, options = {}) {\r\n    if (!input_matrix || Array.isArray(input_matrix)===false) throw new Error('invalid input matrix');\r\n    const x_matrix = (Array.isArray(input_matrix[ 0 ]))\r\n      ? input_matrix\r\n      : [\r\n        input_matrix,\r\n      ];\r\n    const config = Object.assign({\r\n      json: true,\r\n      probability: true,\r\n    }, options);\r\n    return this.calculate(x_matrix)\r\n      .data()\r\n      .then(predictions => {\r\n        if (config.json === false) {\r\n          return predictions;\r\n        } else {\r\n          const shape = [x_matrix.length, this.yShape[ 1 ],];\r\n          const predictionValues = (options.probability === false) ? Array.from(predictions).map(Math.round) : Array.from(predictions);\r\n          return this.reshape(predictionValues, shape);\r\n        }\r\n      })\r\n      .catch(e => {\r\n        throw e; \r\n      });\r\n  }\r\n}",
     "static": true,
     "longname": "/Users/yawjosephetse/Developer/github/repetere/ts-core/lib/core.mjs",
     "access": "public",
@@ -36,7 +36,7 @@
     "longname": "lib/core.mjs~TensorScriptModelInterface#constructor",
     "access": "public",
     "description": "",
-    "lineNumber": 13,
+    "lineNumber": 18,
     "params": [
       {
         "nullable": null,
@@ -68,18 +68,7 @@
         "name": "properties",
         "description": "extra instance properties"
       }
-    ]
-  },
-  {
-    "__docId__": 3,
-    "kind": "member",
-    "name": "settings",
-    "memberof": "lib/core.mjs~TensorScriptModelInterface",
-    "static": false,
-    "longname": "lib/core.mjs~TensorScriptModelInterface#settings",
-    "access": "public",
-    "description": "",
-    "lineNumber": 22,
+    ],
     "properties": [
       {
         "nullable": null,
@@ -131,15 +120,19 @@
         "name": "getInputShape",
         "description": "static TensorScriptModelInterface"
       }
-    ],
-    "type": {
-      "nullable": null,
-      "types": [
-        "Object"
-      ],
-      "spread": false,
-      "description": null
-    }
+    ]
+  },
+  {
+    "__docId__": 3,
+    "kind": "member",
+    "name": "settings",
+    "memberof": "lib/core.mjs~TensorScriptModelInterface",
+    "static": false,
+    "longname": "lib/core.mjs~TensorScriptModelInterface#settings",
+    "access": "public",
+    "description": null,
+    "lineNumber": 19,
+    "undocument": true
   },
   {
     "__docId__": 4,
@@ -150,7 +143,7 @@
     "longname": "lib/core.mjs~TensorScriptModelInterface#model",
     "access": "public",
     "description": null,
-    "lineNumber": 23,
+    "lineNumber": 20,
     "undocument": true
   },
   {
@@ -162,7 +155,7 @@
     "longname": "lib/core.mjs~TensorScriptModelInterface#tf",
     "access": "public",
     "description": null,
-    "lineNumber": 24,
+    "lineNumber": 21,
     "undocument": true
   },
   {
@@ -174,7 +167,7 @@
     "longname": "lib/core.mjs~TensorScriptModelInterface#reshape",
     "access": "public",
     "description": null,
-    "lineNumber": 25,
+    "lineNumber": 22,
     "undocument": true
   },
   {
@@ -186,7 +179,7 @@
     "longname": "lib/core.mjs~TensorScriptModelInterface#getInputShape",
     "access": "public",
     "description": null,
-    "lineNumber": 26,
+    "lineNumber": 23,
     "undocument": true
   },
   {
@@ -203,7 +196,7 @@
     "examples": [
       "const array = [ 0, 1, 1, 0, ];\nconst shape = [2,2];\nTensorScriptModelInterface.reshape(array,shape) // => \n[\n  [ 0, 1, ],\n  [ 1, 0, ],\n];"
     ],
-    "lineNumber": 44,
+    "lineNumber": 41,
     "unknown": [
       {
         "tagName": "@function",
@@ -255,7 +248,7 @@
     "examples": [
       "const input = [\n  [ 0, 1, ],\n  [ 1, 0, ],\n];\nTensorScriptModelInterface.getInputShape(input) // => [2,2]"
     ],
-    "lineNumber": 71,
+    "lineNumber": 68,
     "unknown": [
       {
         "tagName": "@function",
@@ -294,7 +287,7 @@
     "longname": "lib/core.mjs~TensorScriptModelInterface#train",
     "access": "public",
     "description": "Asynchronously trains tensorflow model, must be implemented by tensorscript class",
-    "lineNumber": 88,
+    "lineNumber": 85,
     "params": [
       {
         "nullable": null,
@@ -338,7 +331,7 @@
     "longname": "lib/core.mjs~TensorScriptModelInterface#calculate",
     "access": "public",
     "description": "Predicts new dependent variables",
-    "lineNumber": 97,
+    "lineNumber": 94,
     "params": [
       {
         "nullable": null,
@@ -372,7 +365,7 @@
     "longname": "lib/core.mjs~TensorScriptModelInterface#loadModel",
     "access": "public",
     "description": "Loads a saved tensoflow / keras model",
-    "lineNumber": 105,
+    "lineNumber": 102,
     "params": [
       {
         "nullable": null,
@@ -405,7 +398,7 @@
     "longname": "lib/core.mjs~TensorScriptModelInterface#predict",
     "access": "public",
     "description": "Returns prediction values from tensorflow model",
-    "lineNumber": 116,
+    "lineNumber": 113,
     "params": [
       {
         "nullable": null,

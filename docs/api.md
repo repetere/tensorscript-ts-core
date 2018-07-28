@@ -6,7 +6,7 @@ Base class for tensorscript models
 
 ### `constructor(options: Object, customTF: Object, properties: {model:Object,tf:Object,})`
 
-### `settings: Object`
+### `settings: *`
 
 ### `model: *`
 
